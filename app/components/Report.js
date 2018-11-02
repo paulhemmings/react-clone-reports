@@ -12,7 +12,6 @@ class Report extends Component {
       }
 
     columns()  {
-        console.log(this.state);
         if ((this.state.items || []).length < 1) {
             return [];
         }
@@ -27,7 +26,7 @@ class Report extends Component {
                 <thead>
                     <tr>
                         {
-                            this.columns().map(header => <th>{header}</th>)
+                            this.columns().map(header => <th>{header||''}</th>)
                         }
                     </tr>
                 </thead>
@@ -36,7 +35,7 @@ class Report extends Component {
                         this.state.items.map(row => {
                             return (<tr>
                                 {                        
-                                    this.columns().map(header => <td>{row[header]}</td>)
+                                    this.columns().map(header => <td>{row[header]||''}</td>)
                                 }
                             </tr>)
                         })

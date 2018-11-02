@@ -26,16 +26,30 @@ class App extends Component {
         });        
     }
 
+    // https://min-api.cryptocompare.com/data/all/coinlist
+    // https://jsonplaceholder.typicode.com/todos
+
     getData() {
         var self = this;
-        fetch('https://jsonplaceholder.typicode.com/todos')
+        fetch('https://min-api.cryptocompare.com/data/all/coinlist')
         .then(response => response.json())
-        .then(json => {
-            self.setState({
-                name: 'to do report',
-                items: json
-            });
-        })  
+        .then(response => Object.keys(response.Data).map(key => response.Data[key]))
+        .then(coins => coins.map(coin => { return {
+            name: coin["CoinName"],
+            id: coin["Id"],
+            image: coin["ImageUrl"],
+            trading: coin["IsTrading"],
+            symbol: coin["Symbol"],
+            supply: coin["TotalCoinSupply"],
+            url: coin["Url"]
+          }}))
+//        .then(coins => coins.map(coin => self.addData(coin)));
+         .then(json => {
+             self.setState({
+                 name: 'coins',
+                 items: json
+             });
+         });          
     }
 
     render() {
