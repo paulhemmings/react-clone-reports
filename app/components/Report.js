@@ -33,9 +33,9 @@ class Report extends Component {
                 <tbody>
                     { 
                         this.state.items.map(row => {
-                            return (<tr>
+                            return (<tr>                                
                                 {                        
-                                    this.columns().map(header => <td>{row[header]||''}</td>)
+                                    this.columns().map(header => <td><a href="#" onClick={e => this.props.onClick(row)}>{row[header]||''}</a></td>)
                                 }
                             </tr>)
                         })

@@ -26,6 +26,19 @@ class App extends Component {
         });        
     }
 
+    addPrice(symbol, data) {
+        const itemCopied = [].concat(this.state.items);
+        itemCopied.filter(item => item.symbol == symbol).forEach(coin => coin.price == data.GBP);
+        this.setState({
+            input: this.state.name,
+            items: itemCopied
+          });        
+    }
+
+    handleSelect(app) {
+        return (item) => app.getPrice(item.symbol);
+    }
+
     // https://min-api.cryptocompare.com/data/all/coinlist
     // https://jsonplaceholder.typicode.com/todos
 
@@ -33,14 +46,16 @@ class App extends Component {
         var self = this;
         fetch('https://min-api.cryptocompare.com/data/all/coinlist')
         .then(response => response.json())
-        .then(response => Object.keys(response.Data).map(key => response.Data[key]))
+        .then(response => Object.keys(response.Data)
+                                .map(key => response.Data[key])
+                                .filter(coin => coin.IsTrading))
         .then(coins => coins.map(coin => { return {
             name: coin["CoinName"],
             id: coin["Id"],
             image: coin["ImageUrl"],
-            trading: coin["IsTrading"],
             symbol: coin["Symbol"],
             supply: coin["TotalCoinSupply"],
+            price: '',
             url: coin["Url"]
           }}))
 //        .then(coins => coins.map(coin => self.addData(coin)));
@@ -52,8 +67,15 @@ class App extends Component {
          });          
     }
 
+    getPrice(symbol) {
+        var self = this;
+        fetch('https://min-api.cryptocompare.com/data/price?fsym=' + symbol + '&tsyms=GBP,USD,EUR')
+        .then(response => response.json())
+        .then(json => self.addPrice(symbol, json));
+    }
+
     render() {
-        return <Report name={this.state.name} items={this.state.items} />
+        return <Report name={this.state.name} items={this.state.items} onClick={this.handleSelect(this)} />
     }
 }
 
