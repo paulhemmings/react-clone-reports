@@ -51,8 +51,6 @@ class App extends Component {
                                 .filter(coin => coin.IsTrading))
         .then(coins => coins.map(coin => { return {
             name: coin["CoinName"],
-            id: coin["Id"],
-            image: coin["ImageUrl"],
             symbol: coin["Symbol"],
             supply: coin["TotalCoinSupply"],
             price: '',
