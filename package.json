@@ -1,7 +1,7 @@
 {
-  "name": "gooact-example",
+  "name": "react-clone-reports",
   "version": "1.0.0",
-  "description": "Gooact Example.",
+  "description": "Load Crypto coins and values as reporting POC.",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
