@@ -12,27 +12,27 @@ class App extends Component {
 
         this.getData();
       }
-      
+
     initData() {
         return [];
-    }  
+    }
 
     addData(item) {
         const newItems = [].concat(this.state.items);
         newItems.push(item);
         this.setState({
-          input: this.state.name,
+          name: this.state.name,
           items: newItems,
-        });        
+        });
     }
 
     addPrice(symbol, data) {
         const itemCopied = [].concat(this.state.items);
-        itemCopied.filter(item => item.symbol == symbol).forEach(coin => coin.price == data.GBP);
+        itemCopied.filter(item => item.symbol == symbol).forEach(coin => coin.price = data.GBP);
         this.setState({
-            input: this.state.name,
+            name: this.state.name,
             items: itemCopied
-          });        
+          });
     }
 
     handleSelect(app) {
@@ -62,7 +62,7 @@ class App extends Component {
                  name: 'coins',
                  items: json
              });
-         });          
+         });
     }
 
     getPrice(symbol) {
